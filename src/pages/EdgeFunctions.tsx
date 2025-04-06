@@ -145,17 +145,14 @@ const EdgeFunctions = () => {
         description: `Initiating HTTP 307 redirect to: ${redirectUrl}`,
       });
 
-      const response = await fetch(`/api/health-check?redirect=true&url=${encodeURIComponent(redirectUrl)}`, {
+      // Remove the manual window.location redirect and let the fetch follow the 307
+      await fetch(`/api/health-check?redirect=true&url=${encodeURIComponent(redirectUrl)}`, {
         method: 'GET',
-        redirect: 'follow', // This is important for following 307 redirects
+        redirect: 'follow', // Let browser handle the redirect
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // The browser will automatically follow the redirect
-      window.location.href = redirectUrl;
+      // Remove this line as the redirect is handled by the fetch response
+      // window.location.href = redirectUrl;
     } catch (error) {
       console.error('Redirect error:', error);
       toast({
