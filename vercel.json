@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "buildCommand": "npm run build",
+    "crons": [
+        {
+            "path": "/api/health-check",
+            "schedule": "0 9 * * *"
+        }
+    ],
+    "regions": ["iad1"],
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/index.html" }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+}
